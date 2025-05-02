@@ -11,7 +11,7 @@ import java.util.Map;
 public class ProductsResource {
 
 
-    Map<String, Product> products = new HashMap<>(Map.of(
+    private static Map<String, Product> products = new HashMap<>(Map.of(
             "Shaan body milk", new Product("Shaan body milk", 200),
             "Eva lotion", new Product("Eva lotion", 150),
             "Care and More cream", new Product("Care and More cream", 50),
