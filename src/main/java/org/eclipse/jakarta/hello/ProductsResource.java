@@ -12,10 +12,10 @@ public class ProductsResource {
 
 
     private static Map<String, Product> products = new HashMap<>(Map.of(
-            "Shaan body milk", new Product("Shaan body milk", 200),
-            "Eva lotion", new Product("Eva lotion", 150),
-            "Care and More cream", new Product("Care and More cream", 50),
-            "Pure cream", new Product("Pure cream", 20)
+            "shaan body milk", new Product("shaan body milk", 200),
+            "eva lotion", new Product("eva lotion", 150),
+            "care and more cream", new Product("care and more cream", 50),
+            "pure cream", new Product("pure cream", 20)
     ) );
 
 
@@ -33,10 +33,14 @@ public class ProductsResource {
                            @QueryParam("price")Integer price){
 
 
-        Product product = new Product(name, price);
-        products.put(name, product);
+        if(products.containsKey(name.toLowerCase())) return "<p> Product already exists ! </p>";
 
-        return "<p> Product is added successfully ! </p>";
+        else {
+            Product product = new Product(name, price);
+            products.put(name, product);
+
+            return "<p> Product is added successfully ! </p>";
+        }
     }
 
     @PUT
@@ -45,20 +49,27 @@ public class ProductsResource {
                            @QueryParam("price")Integer price){
 
 
-        Product product = products.get(name);
-        product.setPrice(price);
+        if(!products.containsKey(name.toLowerCase())) return "<p> Product does not exist ! </p>";
 
-        products.put(name, product);
+        else {
+            Product product = products.get(name);
+            product.setPrice(price);
 
-       return "<p> Product is updated successfully ! </p>";
+            products.put(name, product);
+
+            return "<p> Product is updated successfully ! </p>";
+        }
     }
 
     @DELETE
     @Produces({MediaType.TEXT_HTML})
     public String deleteProduct(@QueryParam("name")String name){
 
-        products.remove(name);
+        if(!products.containsKey(name.toLowerCase())) return "<p> Product does not exist ! </p>";
 
-        return"<p> Product is deleted successfully ! </p>";
+        else {
+            products.remove(name);
+            return "<p> Product is deleted successfully ! </p>";
+        }
     }
 }
